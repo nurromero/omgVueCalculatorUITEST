@@ -29,21 +29,20 @@ namespace vueCalculatorUITest
             Assert.AreEqual("Document", driver.Title);
 
             //Finding the elements on the page
-            IWebElement num1Element = driver.FindElement(By.CssSelector("input[type='number']:nth-of-type(1)"));
+            IWebElement num1Element = driver.FindElement(By.Id("num1"));
             num1Element.SendKeys("45");
 
-            IWebElement num2Element = driver.FindElement(By.CssSelector("input[type='number']:nth-of-type(2)"));
+            IWebElement num2Element = driver.FindElement(By.Id("num2"));
             num2Element.SendKeys("20");
 
-            IWebElement selectElement = driver.FindElement(By.CssSelector("select"));
+            IWebElement selectElement = driver.FindElement(By.Id("operation"));
 
             //Finding the button and clicking it 
-            IWebElement buttonElement = driver.FindElement(By.CssSelector("button.btn-primary"));
+            IWebElement buttonElement = driver.FindElement(By.Id("calculatebutton"));
             buttonElement.Click();
 
-            //Find the result element, verifying/asserting it 
-            //Using last.child, because the result is the last element in the result-container (D:) 
-            IWebElement resultElement = driver.FindElement(By.CssSelector(".result-container > div:last-child"));
+
+            IWebElement resultElement = driver.FindElement(By.Id("result"));
             Assert.AreEqual("Result: 65", resultElement.Text);
 
         }
