@@ -13,7 +13,7 @@ namespace vueCalculatorUITest
         private static readonly string DriverDirectory = "C:\\webDrivers";
         private static IWebDriver driver;
 
-
+         
         [ClassInitialize]
         public static void Setup(TestContext context)
         {
