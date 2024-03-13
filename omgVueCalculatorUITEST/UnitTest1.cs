@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 
 namespace vueCalculatorUITest
@@ -9,15 +10,22 @@ namespace vueCalculatorUITest
     public class UnitTest1
     {
 
-        private static readonly string DriverDirectory = "C:\\Users\\baddi\\OneDrive\\Skrivebord\\Programmering - 3rd semester\\webDrivers";
-        private IWebDriver driver;
+        private static readonly string DriverDirectory = "C:\\webDrivers";
+        private static IWebDriver driver;
 
 
-        [TestInitialize]
-        public void TestInitialize()
+        [ClassInitialize]
+        public static void Setup(TestContext context)
         {
             driver = new ChromeDriver(DriverDirectory);
         }
+
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            driver.Quit();
+        }
+
 
         [TestMethod]
         public void TestWebsite()
@@ -35,25 +43,26 @@ namespace vueCalculatorUITest
             IWebElement num2Element = driver.FindElement(By.Id("num2"));
             num2Element.SendKeys("20");
 
+
+            // Locating the dropdown element(+ or -)
             IWebElement selectElement = driver.FindElement(By.Id("operation"));
 
+            // Turning the dropdown element into a SelectElement
+            SelectElement dropdown = new SelectElement(selectElement);
+            dropdown.SelectByValue("+");
+
             //Finding the button and clicking it 
-            IWebElement buttonElement = driver.FindElement(By.Id("calculatebutton"));
+            IWebElement buttonElement = driver.FindElement(By.Id("calculateButton"));
             buttonElement.Click();
 
 
             IWebElement resultElement = driver.FindElement(By.Id("result"));
-            Assert.AreEqual("Result: 65", resultElement.Text);
+            Assert.AreEqual("= 65", resultElement.Text);
 
         }
 
 
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            driver.Quit();
-        }
-
+     
 
 
 
